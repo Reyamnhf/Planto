@@ -9,9 +9,20 @@ import SwiftUI
 
 @main
 struct PlantoApp: App {
+    @StateObject private var vm = PlantsViewModel()
+
+    init() {
+        NotificationManager.requestAuthorization()
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            StartJourneyView()
+                .environmentObject(vm)              // share VM everywhere
         }
     }
 }
+
+
+
+
