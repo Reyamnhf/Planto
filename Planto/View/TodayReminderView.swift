@@ -25,7 +25,6 @@ struct TodayReminderView: View {
     var body: some View {
         VStack(spacing: sectionGap) {
 
-            // Header
             VStack(alignment: .leading, spacing: 10) {
                 Text("My Plants 🌱")
                     .font(.system(size: 34, weight: .bold))
@@ -37,15 +36,13 @@ struct TodayReminderView: View {
             .padding(.horizontal, hPad)
             .padding(.top, 8)
 
-            // Progress or All Done
+            
             if vm.allDone {
                 allDoneCard
             } else {
                 progressCard
             }
 
-
-            // LIST: swipe works + custom middle divider between rows
             if !vm.allDone {
                 List {
                     ForEach(vm.plants.indices, id: \.self) { i in
@@ -58,7 +55,7 @@ struct TodayReminderView: View {
                             .listRowSeparator(.hidden)
 
                         if i < vm.plants.count - 1 {
-                            MidDividerRow() // تعريفه تحت
+                            MidDividerRow()
                                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                                 .listRowBackground(Color.clear)
                                 .listRowSeparator(.hidden)
@@ -90,12 +87,22 @@ struct TodayReminderView: View {
             }
         }
         .background(Color.black.ignoresSafeArea())
-        // (9) daily rollover: reset watered state once per day
+       
         .onAppear { vm.rolloverIfNeeded() }
+        
+        
+        .sheet(item: $vm.activeSheet) { route in
+            AddEditPlantSheet(route: route)
+                .environmentObject(vm)
+                .presentationDetents([.fraction(0.95)])   // الشيت دايمًا ٩٥٪ من الشاشة
+                .presentationCornerRadius(28)             // زوايا ناعمة مثل التصميم
+                .interactiveDismissDisabled(false)
+                .presentationBackground(.ultraThinMaterial)
+        }
+
     }
 
-    // MARK: - Progress / All Done
-
+    
     // (1) Animated progress bar + reduced top padding
     private var progressCard: some View {
         let done = vm.plants.filter { $0.isWateredToday }.count
@@ -119,7 +126,7 @@ struct TodayReminderView: View {
                 }
             }
             .frame(height: 6)
-            .padding(.top, 2) // أخف فوق
+            .padding(.top, 2)
         }
         .padding(.horizontal, hPad + 4)
         .padding(.top, 2)
@@ -152,20 +159,18 @@ struct TodayReminderView: View {
 private struct MidDividerRow: View {
     var body: some View {
         VStack(spacing: 0) {
-            // padding علوي
+
             Spacer().frame(height: 10)
 
-            // الخط
+
             Rectangle()
                 .fill(.white.opacity(0.25))
                 .frame(height: 0.5)
 
-            // padding سفلي
             Spacer().frame(height: 10)
         }
     }
 }
-
 
 #Preview {
     TodayReminderView()

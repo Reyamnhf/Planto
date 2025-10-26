@@ -24,9 +24,12 @@ struct StartJourneyView: View {
             .sheet(item: $vm.activeSheet) { route in
                 AddEditPlantSheet(route: route)
                     .environmentObject(vm)
-                    .presentationDetents([.medium, .large])
+                    .presentationDetents([.fraction(0.95)])
                     .presentationCornerRadius(28)
+                    .interactiveDismissDisabled(false)
+                    .presentationBackground(.ultraThinMaterial)
             }
+
             .navigationBarHidden(true)
         }
         .preferredColorScheme(.dark)

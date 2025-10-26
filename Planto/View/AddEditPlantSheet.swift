@@ -32,7 +32,6 @@ struct AddEditPlantSheet: View {
                         roundedTextField(title: "Plant Name", prompt: "", text: $form.name)
                     }
                     
-                    // GROUP #1: Room / Light
                     card {
                         groupRow(icon: "paperplane", title: "Room", value: form.room.label) {
                             menuRoom
@@ -43,7 +42,6 @@ struct AddEditPlantSheet: View {
                         }
                     }
                     
-                    // GROUP #2: Watering Days / Water
                     card {
                         groupRow(icon: "drop", title: "Watering Days", value: form.wateringDays.rawValue) {
                             menuWatering
@@ -59,8 +57,15 @@ struct AddEditPlantSheet: View {
                             vm.deletePlant(p)   // remove from list
                             dismiss()           // close the sheet
                         } label: {
-                            Text("Delete Reminder")
-                                .frame(maxWidth: .infinity)
+                            Text("Delete Reminder")//زر احمر
+                                .font(.headline)
+                                        .foregroundColor(.white)
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.vertical, 14)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .fill(Color.red.opacity(0.9))
+                                            )
                         }
                         .buttonStyle(LiquidGlassButtonStyle(height: 52, isDestructive: true))
                         .padding(.top, 6)
@@ -194,7 +199,7 @@ struct AddEditPlantSheet: View {
     
     private func preloadIfEditing() {
         if case .edit = route {
-            form = ReminderSettings(name: "Pothos")
+            form = ReminderSettings(name: "Plant Name")
         }
     }
 

@@ -11,7 +11,6 @@ struct PlantRow: View {
     @EnvironmentObject private var vm: PlantsViewModel
     let plant: Plant
 
-    // ثوابت بسيطة عشان يفضل الشكل ثابت
     private let checkSize: CGFloat = 26
     private let nameFont = Font.system(size: 28, weight: .semibold)
 
