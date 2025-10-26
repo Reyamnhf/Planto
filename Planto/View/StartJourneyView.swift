@@ -80,6 +80,15 @@ private struct OnboardingEmptyState: View {
             .padding(.horizontal, 40)
             .padding(.bottom, 28)
         }
+        
+        
+        //الاشعارات
+        .onAppear {
+            NotificationManager.shared.requestAuthorization()
+            vm.applyReminderTime(hour: 9, minute: 0)
+
+        }
+
     }
 }
 

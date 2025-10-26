@@ -17,7 +17,8 @@ struct PlantRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // سطر المكان (in Kitchen)
+           
+            
             HStack(spacing: 6) {
                 Image(systemName: "paperplane")
                     .font(.caption2)
@@ -28,7 +29,7 @@ struct PlantRow: View {
             }
 
             HStack(alignment: .top, spacing: 12) {
-                // زر التشييك 26pt
+                
                 Button {
                     UIImpactFeedbackGenerator(style: .soft).impactOccurred()
                     withAnimation(.easeInOut) { vm.toggleWatered(for: plant) }
@@ -63,7 +64,7 @@ struct PlantRow: View {
                         .contentShape(Rectangle())
                         .onTapGesture { vm.activeSheet = .edit(plant) }
 
-                    // الشمس + الماء "جنب بعض" فقط (بدون أي تغييرات ثانية)
+                    
                     HStack(spacing: 10) {
                         chip(icon: "sun.max", text: plant.light, tint: Color("BabyYellow"))
                         chip(icon: "drop",    text: plant.waterAmount, tint: Color("Babyblue"))
@@ -88,7 +89,6 @@ struct PlantRow: View {
         }
     }
 
-    // شريط معلومات صغير (chip) بنفس أسلوبك وألوان الأصول
     private func chip(icon: String, text: String, tint: Color) -> some View {
         HStack(spacing: 8) {
             Image(systemName: icon)

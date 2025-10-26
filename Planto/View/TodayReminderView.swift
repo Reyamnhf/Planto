@@ -44,21 +44,19 @@ struct TodayReminderView: View {
                 progressCard
             }
 
-                        // LIST with swipe actions working
+
             // LIST: swipe works + custom middle divider between rows
             if !vm.allDone {
                 List {
                     ForEach(vm.plants.indices, id: \.self) { i in
                         let plant = vm.plants[i]
 
-                        // الصف القابل للسحب
                         PlantRow(plant: plant)
                             .environmentObject(vm)
                             .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
 
-                        // ✅ فاصل في "نص" المسافة بين العناصر فقط (مو بعد آخر عنصر)
                         if i < vm.plants.count - 1 {
                             MidDividerRow() // تعريفه تحت
                                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
