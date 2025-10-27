@@ -109,6 +109,7 @@ struct TodayReminderView: View {
         let line = done == 0
             ? "Your plants are waiting for a sip 💦"
             : "\(done) of your plants feel loved today ✨"
+          
 
         return VStack(alignment: .leading, spacing: 8) {
             Text(line)

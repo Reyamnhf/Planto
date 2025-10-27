@@ -33,7 +33,7 @@ struct AddEditPlantSheet: View {
                     }
                     
                     card {
-                        groupRow(icon: "paperplane", title: "Room", value: form.room.label) {
+                        groupRow(icon: "location", title: "Room", value: form.room.label) {
                             menuRoom
                         }
                         dividerLine

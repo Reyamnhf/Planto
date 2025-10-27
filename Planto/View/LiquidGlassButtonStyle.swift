@@ -20,10 +20,10 @@ struct LiquidGlassButtonStyle: ButtonStyle {
             .foregroundStyle(.white)
             .background {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    RoundedRectangle(cornerRadius: 25, style: .continuous)
                         .fill(.ultraThinMaterial.opacity(0.28))
                         .overlay(
-                            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            RoundedRectangle(cornerRadius: 25, style: .continuous)
                                 .strokeBorder(
                                     LinearGradient(
                                         colors: [.white.opacity(0.6), .white.opacity(0.15)],
@@ -32,7 +32,7 @@ struct LiquidGlassButtonStyle: ButtonStyle {
                                 )
                         )
 
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    RoundedRectangle(cornerRadius: 25, style: .continuous)
                         .fill(tint.opacity(configuration.isPressed ? 0.55 : 0.75))
 
                     AngularGradient(
@@ -45,18 +45,18 @@ struct LiquidGlassButtonStyle: ButtonStyle {
                         center: .center
                     )
                     .mask(
-                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        RoundedRectangle(cornerRadius: 25, style: .continuous)
                             .blur(radius: 24)
                     )
                     .opacity(configuration.isPressed ? 0.45 : 0.6)
                 }
             }
             .overlay(
-                RoundedRectangle(cornerRadius: 18)
+                RoundedRectangle(cornerRadius: 25)
                     .stroke(isDestructive ? Color.red.opacity(0.6) : Color.clear)
             )
             .scaleEffect(configuration.isPressed ? 0.985 : 1)
-            .shadow(color: .black.opacity(0.35), radius: 16, y: 10)
+            .shadow(color: .black.opacity(0.35), radius: 25, y: 10)
             .animation(.spring(response: 0.35, dampingFraction: 0.9), value: configuration.isPressed)
     }
 }

@@ -19,7 +19,7 @@ struct PlantRow: View {
            
             
             HStack(spacing: 6) {
-                Image(systemName: "paperplane")
+                Image(systemName: "location")
                     .font(.caption2)
                     .foregroundStyle(.white.opacity(0.55))
                 Text("in \(plant.room)")

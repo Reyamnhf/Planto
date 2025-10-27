@@ -59,6 +59,7 @@ private struct OnboardingEmptyState: View {
 
             VStack(spacing: 8) {
                 Text("Start your plant journey!")
+                    .padding(.bottom, 10)
                     .font(.title2).foregroundColor(.white).fontWeight(.semibold)
                 Text("Now all your plants will be in one place and we will help you take care of them :) 🪴")
                     .font(.callout)
@@ -67,7 +68,7 @@ private struct OnboardingEmptyState: View {
                     .frame(maxWidth: 340)
                     .padding(.horizontal, 40)
             }
-            .padding(.top, 8)
+            .padding(.top, 10)
 
             Spacer()
 
@@ -76,12 +77,15 @@ private struct OnboardingEmptyState: View {
             } label: {
                 Text("Set Plant Reminder")
                     .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth:300, minHeight: 35)
             }
+            
             .buttonStyle(LiquidGlassButtonStyle(height: 54, tint: Color("plantogreen")))
-            .shadow(color: Color("plantogreen").opacity(0.55), radius: 34, y: 16)
+            
             .padding(.horizontal, 40)
-            .padding(.bottom, 28)
+            .padding(.top, 5)
+            
+            Spacer(minLength: 60)
         }
         
         
