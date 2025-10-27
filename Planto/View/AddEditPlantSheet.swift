@@ -10,28 +10,40 @@ struct AddEditPlantSheet: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var vm: PlantsViewModel
     let route: PlantsViewModel.SheetRoute
-    
 
     @State private var form = ReminderSettings()
-    
+
     private let cardCorner: CGFloat = 22
     private let fieldCorner: CGFloat = 22
     private let rowHeight: CGFloat = 54
     private let horizontalPad: CGFloat = 18
-    
+
     var body: some View {
         ZStack {
             Color.black.opacity(0.75).ignoresSafeArea()
-            
+
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 22) {
                     titleBar
-                    
-                   
-                    VStack(alignment: .leading, spacing: 8) {
-                        roundedTextField(title: "Plant Name", prompt: "", text: $form.name)
-                    }
-                    
+
+                    // Plant name
+                    TextField("Plant Name", text: $form.name)
+                        .textInputAutocapitalization(.words)
+                        .disableAutocorrection(false)
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 18)
+                        .frame(height: 56)
+                        .background(
+                            RoundedRectangle(cornerRadius: fieldCorner, style: .continuous)
+                                .fill(.white.opacity(0.10))
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: fieldCorner, style: .continuous)
+                                .stroke(.white.opacity(0.16), lineWidth: 1)
+                        )
+                        .padding(.top, 4)
+
+                    // Group 1
                     card {
                         groupRow(icon: "location", title: "Room", value: form.room.label) {
                             menuRoom
@@ -41,7 +53,8 @@ struct AddEditPlantSheet: View {
                             menuLight
                         }
                     }
-                    
+
+                    // Group 2
                     card {
                         groupRow(icon: "drop", title: "Watering Days", value: form.wateringDays.rawValue) {
                             menuWatering
@@ -51,23 +64,28 @@ struct AddEditPlantSheet: View {
                             menuWater
                         }
                     }
-                    
+
+                    // DELETE (edit mode only) — glass pill with red text
                     if case .edit(let p) = route {
                         Button(role: .destructive) {
                             vm.deletePlant(p)   // remove from list
                             dismiss()           // close the sheet
                         } label: {
-                            Text("Delete Reminder")//زر احمر
+                            Text("Delete Reminder")
                                 .font(.headline)
-                                        .foregroundColor(.white)
-                                        .frame(maxWidth: .infinity)
-                                        .padding(.vertical, 14)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 16)
-                                                .fill(Color.red.opacity(0.9))
-                                            )
+                                .foregroundColor(.red.opacity(0.9)) // red text
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 56)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                        .fill(.white.opacity(0.08))             // dark glass fill
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                        .stroke(.white.opacity(0.12), lineWidth: 1) // subtle stroke
+                                )
                         }
-                        .buttonStyle(LiquidGlassButtonStyle(height: 52, isDestructive: true))
+                        .buttonStyle(.plain) // don't let custom styles override this look
                         .padding(.top, 6)
                     }
                 }
@@ -79,8 +97,8 @@ struct AddEditPlantSheet: View {
         .onAppear { preloadIfEditing() }
         .preferredColorScheme(.dark)
     }
-    
-  
+
+    // MARK: - Title Bar
     private var titleBar: some View {
         HStack {
             CircleIconButton(systemName: "xmark") { dismiss() }
@@ -94,32 +112,31 @@ struct AddEditPlantSheet: View {
                 tint: Color("plantogreen"),
                 bgOpacity: form.isValid ? 0.28 : 0.10
             ) { if form.isValid { save() } }
-                .disabled(!form.isValid)
-                .opacity(form.isValid ? 1 : 0.6)
+            .disabled(!form.isValid)
+            .opacity(form.isValid ? 1 : 0.6)
         }
     }
-    
+
+    // MARK: - Components
     private func card<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
-        VStack(spacing: 0) {
-            content()
-        }
-        .background(Color.white.opacity(0.09))
-        .clipShape(RoundedRectangle(cornerRadius: cardCorner, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: cardCorner, style: .continuous)
-                .stroke(.white.opacity(0.08), lineWidth: 1)
-        )
+        VStack(spacing: 0) { content() }
+            .background(Color.white.opacity(0.09))
+            .clipShape(RoundedRectangle(cornerRadius: cardCorner, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: cardCorner, style: .continuous)
+                    .stroke(.white.opacity(0.08), lineWidth: 1)
+            )
     }
-    
+
     private var dividerLine: some View {
         Rectangle()
             .fill(.white.opacity(0.08))
             .frame(height: 0.5)
             .padding(.leading, 50)
     }
-    
+
     private func roundedTextField(title: String, prompt: String, text: Binding<String>) -> some View {
-        TextField(title, text: text)                      
+        TextField(title, text: text)
             .textInputAutocapitalization(.words)
             .disableAutocorrection(false)
             .foregroundStyle(.white)
@@ -142,25 +159,23 @@ struct AddEditPlantSheet: View {
         value: String,
         @ViewBuilder menu: @escaping () -> Content
     ) -> some View {
-        Menu {
-            menu()
-        } label: {
+        Menu { menu() } label: {
             HStack(spacing: 12) {
                 Image(systemName: icon)
                     .font(.system(size: 18, weight: .medium))
                     .frame(width: 28, height: 28)
                     .foregroundStyle(.white.opacity(0.92))
-                
+
                 Text(title)
                     .foregroundStyle(.white)
                     .font(.body)
-                
+
                 Spacer()
-                
+
                 Text(value)
                     .foregroundStyle(.white.opacity(0.72))
                     .font(.body)
-                
+
                 Image(systemName: "chevron.up.chevron.down")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(.white.opacity(0.6))
@@ -170,33 +185,32 @@ struct AddEditPlantSheet: View {
             .contentShape(Rectangle())
         }
     }
-    
-    
+
+    // MARK: - Menus
     private var menuRoom: some View {
         ForEach(ReminderSettings.Room.allCases, id: \.self) { r in
             Button(r.label) { form.room = r }
         }
     }
-    
+
     private var menuLight: some View {
         ForEach(ReminderSettings.Light.allCases, id: \.self) { l in
             Button(l.rawValue) { form.light = l }
         }
     }
-    
+
     private var menuWatering: some View {
         ForEach(ReminderSettings.Watering.allCases, id: \.self) { w in
             Button(w.rawValue) { form.wateringDays = w }
         }
     }
-    
+
     private var menuWater: some View {
         ForEach(["15–30 ml", "20–50 ml", "50–80 ml"], id: \.self) { amt in
             Button(amt) { form.waterAmount = amt }
         }
     }
-    
-    
+
     private func preloadIfEditing() {
         if case .edit = route {
             form = ReminderSettings(name: "Plant Name")
@@ -216,14 +230,15 @@ struct AddEditPlantSheet: View {
         }
         dismiss()
     }
-
 }
+
+// MARK: - Circular Icon Button (helper)
 private struct CircleIconButton: View {
     var systemName: String
     var tint: Color = .white
     var bgOpacity: Double = 0.18
     var action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
             Image(systemName: systemName)
@@ -235,7 +250,6 @@ private struct CircleIconButton: View {
         .buttonStyle(.plain)
     }
 }
-    
 
 #Preview("Sheet – Add") {
     AddEditPlantSheet(route: .add)

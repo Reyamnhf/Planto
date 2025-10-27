@@ -109,13 +109,15 @@ struct TodayReminderView: View {
         let line = done == 0
             ? "Your plants are waiting for a sip 💦"
             : "\(done) of your plants feel loved today ✨"
-          
 
-        return VStack(alignment: .leading, spacing: 8) {
+        return VStack(spacing: 8) {
+            // Centered text
             Text(line)
                 .foregroundStyle(.white.opacity(0.92))
                 .font(.subheadline)
+                .frame(maxWidth: .infinity, alignment: .center) // center horizontally
 
+            // Progress bar
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(.white.opacity(0.10))
