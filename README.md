@@ -1,4 +1,6 @@
-<img src="https://github.com/Reyamnhf/Planto/blob/main/PlantoIcon-removebg-preview.png" width="200" height="250">
+
+<img width="200" height="250" alt="PlantoIcon-removebg-preview" src="https://github.com/user-attachments/assets/5d2bd1f7-7108-4a87-a975-cdd9a4b1fee8" />
+
 
 # Planto 
 ## A calming iOS app designed for plant lovers! reminding you to water, nurture, and grow your green friends with ease 🌿
